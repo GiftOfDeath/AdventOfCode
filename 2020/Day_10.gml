@@ -1,7 +1,7 @@
 // Don't ask me how any of this works
 // VM:
-//   Part 1 solve avg. time: 0.19ms
-//   Part 2 solve avg. time: 25.35ms
+//   P1 solve avg. time: 0.19ms
+//   P1 solve avg. time: 25.35ms
 // YYC:
 //   P1 solve avg. time: 0.14ms
 //   P2 solve avg. time: 8.71ms

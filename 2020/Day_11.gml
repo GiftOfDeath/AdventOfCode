@@ -1,6 +1,6 @@
 // VM: 
-//   P1 execution time: 8433.77ms
-//   P2 execution time: 17923.43ms
+//   P1 solve avg. time: 8433.77ms
+//   P1 solve avg. time: 17923.43ms
 // YYC:
 //   P1 solve avg. time: 1334.11ms
 //   P2 solve avg. time: 4073.74ms
