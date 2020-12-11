@@ -1,5 +1,12 @@
-function day4_v2_p1(){
-	var _passports = day4_v2_input(),
+// VM:
+//   P1 solve avg. time: 5.07ms
+//   P2 solve avg. time: 9.40ms
+// YYC:
+//   P1 solve avg. time: 4.94ms
+//   P2 solve avg. time: 6.41ms
+
+function day4_v2_p1(input){
+	var _passports = input,
 		_map,
 		_valid_passports = 0;
 	
@@ -14,8 +21,8 @@ function day4_v2_p1(){
 	return _valid_passports;
 }
 
-function day4_v2_p2() {
-	var _passports = day4_v2_input(),
+function day4_v2_p2(input) {
+	var _passports = input,
 		_map,
 		_valid_passports = 0,
 		_ecl_values = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];;

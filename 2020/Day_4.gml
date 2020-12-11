@@ -1,5 +1,12 @@
-function day4_part1(){
-	var _ids = day4_input();
+// VM:
+//   P1 solve avg. time: 2.86ms
+//   P2 solve avg. time: 28.18ms
+// YYC:
+//   P1 solve avg. time: 1.65ms
+//   P2 solve avg. time: 14.17ms
+
+function day4_part1(input){
+	var _ids = input;
 	
 	var _keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"],
 		_valid_passports = 0,
@@ -21,18 +28,16 @@ function day4_part1(){
 	return _valid_passports;
 }
 
-function day4_part2() {
-	var _ids = day4_input();
+function day4_part2(input) {
+	var _ids = input;
 	
 	var _valid_passports = 0,
 		_passport = [],
 		_pair = [],
-		_missing_cid = 0,
 		_missing_info = 7,
 		_ecl_values = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
 	for( var i = 0; i < array_length(_ids); i++ ) {
 		_passport = string_split( _ids[i], " ", type_string );
-		show_debug_message( string(_passport) + " " +string(array_length(_passport)) );
 		
 		if( array_length(_passport) < 7 ) { continue; }
 		

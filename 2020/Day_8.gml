@@ -1,3 +1,12 @@
+// VM:
+//   P1 solve avg. time: 2.88ms
+//   P2 solve avg. time: 33.90ms
+//   P2 solve avg. time: 17.94ms (_on_crack version, to be improved further)
+// YYC:
+//   P1 solve avg. time: 1.41ms
+//   P2 solve avg. time: 17.07ms
+//   P2 solve avg. time: 8.75ms (_on_crack version, to be improved further)
+
 function day8_part1(input){
 	var _instructions = input,
 		_repeat = ds_list_create(),
@@ -125,7 +134,7 @@ function day8_part2_on_crack(input){
 
 // Made a bruteforce method just for the funsies after already solving part 2
 // Turns out it's significantly slower unless the target instruction is 
-// relatively early on in the file!
+// relatively early on in the file! (measured in VM)
 // Proper solve avg. time: 30.27ms
 // Bruteforce solve avg. time: 145.07ms (my input, changed in. 425)
 // Proper solve avg. time: 26.35ms

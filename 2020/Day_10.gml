@@ -1,7 +1,12 @@
 // Don't ask me how any of this works
-// Part 1 solve avg. time: 0.19ms
-// Part 2 solve avg. time: 25.35ms
+// VM:
+//   Part 1 solve avg. time: 0.19ms
+//   Part 2 solve avg. time: 25.35ms
+// YYC:
+//   P1 solve avg. time: 0.14ms
+//   P2 solve avg. time: 8.71ms
 
+// input = input_list(file, type_real);
 function day10_part1(input){
 	var _joltage = 0,
 		_1jolt = 0,

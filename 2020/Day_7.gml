@@ -1,3 +1,10 @@
+// VM:
+//   P1 solve avg. time: 97.66ms
+//   P2 solve avg. time: 0.48ms
+// YYC:
+//   P1 solve avg. time: 66.71ms
+//   P2 solve avg. time: 0.28ms
+
 function day7_part1( bags ) {
 	var _key = ds_map_find_first(bags),
 		_last = ds_map_find_last(bags),

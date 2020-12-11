@@ -1,3 +1,10 @@
+// VM:
+//   P1 solve avg. time: 6.95ms
+//   P2 solve avg. time: 686.74ms
+// YYC:
+//   P1 solve avg. time: 1.49ms
+//   P2 solve avg. time: 109.10ms
+
 function day1_part1(){
 	var _arr = [],
 		_f = file_text_open_read( "1.txt" );

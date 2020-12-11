@@ -1,3 +1,10 @@
+// VM: 
+//   P1 solve avg. time: 2.65ms
+//   P2 solve avg. time: 7.89ms
+// YYC:
+//   P1 solve avg. time: 1.95ms
+//   P2 solve avg. time: 3.01ms
+
 function day3_part1(){
 	var _file = file_text_open_read( "3.txt" ),
 		_line = "",
@@ -36,6 +43,5 @@ function day3_part2(){
 		_y++;
 	}
 	
-	show_debug_message( _trees );
 	return array_product( _trees );
 }

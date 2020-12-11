@@ -1,3 +1,11 @@
+// VM:
+//   P1 solve avg. time: 102.69ms
+//   P2 solve avg. time: 0.61ms
+// YYC
+//   P1 solve avg. time: 18.65ms
+//   P2 solve avg. time: 0.09ms
+
+// input = input_array(file, type_real);
 function day9_part1(input){
 	var _val, 
 		_l = array_length(input),
@@ -25,6 +33,7 @@ function day9_part1(input){
 	}
 }
 
+// tSum = part 1 answer
 function day9_part2(input,tSum) {
 	var _l = array_length(input),
 		_first = 0,
