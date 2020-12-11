@@ -38,15 +38,9 @@ function day7_part1( bags ) {
 function day7_part2( bags, bag ) {
 	if( bags[? bag] == -1 ) return 0;
 	
-	var _key = ds_map_find_first( bags[? bag] ),
-		_last = ds_map_find_last( bags[? bag] ),
-		_sum = 0;
-	
-	while(1) {
+	var _sum = 0;
+	for( var _key = ds_map_find_first( bags[? bag] ); !is_undefined(_key); _key = ds_map_find_next( bags[? bag], _key ) ) {
 		_sum += bags[? bag][? _key] + (bags[? bag][? _key] * day7_part2( bags, _key ));
-		
-		if( _key == _last ) break;
-		_key = ds_map_find_next( bags[? bag], _key );
 	}
 	
 	return _sum;
