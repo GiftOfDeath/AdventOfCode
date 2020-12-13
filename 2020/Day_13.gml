@@ -2,6 +2,8 @@
 //   P1 solve avg. time: 0.13ms
 //   P2 solve avg. time: 0.90ms
 // YYC:
+//   P1 solve avg. time: 0.07ms
+//   P2 solve avg. time: 0.33ms
 
 
 function day13_part1(input) {
