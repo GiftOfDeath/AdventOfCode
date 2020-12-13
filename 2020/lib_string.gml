@@ -33,7 +33,7 @@ function string_strip( str, substr) {
 	}
 	
 	for( var i = 0; i < array_length(substr); i++ ) {
-		str = string_replace( str, substr[i], "" );
+		str = string_replace_all( str, substr[i], "" );
 	}
 	
 	return str;
