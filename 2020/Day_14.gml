@@ -5,7 +5,11 @@
 //   P1 solve avg. time: 42.41ms
 //   P2 solve avg. time: 90555.36ms
 
-// ...might have to try to optimise p2 a bit
+// ...might have to try to optimise p2 a bit, the sum calculation seems to be the problem:
+//   Processing memory block 0-99...
+//     Done in 359.13ms
+//   Calculating sum...
+//     Done in 88321.57ms
 
 // input = input_array(file)
 function day14_part1(input){
@@ -62,8 +66,10 @@ function day14_part2(input){
 	
 	var _memory = ds_map_create();
 	
+	var b = 0, t = get_timer();
 	for( var i = 0; i < array_length(input); i++ ) {
 		if( string_pos( "mask", input[i] ) > 0 ) {
+			log( "Processing memory block "+string(b++)+"..." );
 			_line = string_strip( input[i], "mask = " );
 			_ones = "";
 			_zeroes = "";
@@ -98,10 +104,14 @@ function day14_part2(input){
 		}
 	}
 	
+	log( "Done in "+string((get_timer()-t)/1000)+"ms" );
+	log( "Calculating sum..." );
+	t = get_timer();
 	var _sum = 0;
 	for( var _key = ds_map_find_first(_memory); !is_undefined(_key); _key = ds_map_find_next(_memory,_key) ) {
 		_sum += _memory[? _key];
 	}
+	log( "Done in "+string((get_timer()-t)/1000)+"ms" );
 	
 	return _sum;
 }
