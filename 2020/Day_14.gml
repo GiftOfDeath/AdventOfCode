@@ -1,15 +1,9 @@
 // VM
-//   P1 solve avg. time: 71.55ms
-//   P2 solve avg. time: 105122.21ms
+//   P1 solve avg. time: 74.06ms
+//   P2 solve avg. time: 921.67ms
 // YYC
-//   P1 solve avg. time: 42.41ms
-//   P2 solve avg. time: 90555.36ms
-
-// ...might have to try to optimise p2 a bit, the sum calculation seems to be the problem:
-//   Processing memory block 0-99...
-//     Done in 359.13ms
-//   Calculating sum...
-//     Done in 88321.57ms
+//   P1 solve avg. time: 42.59ms
+//   P2 solve avg. time: 667.72ms
 
 // input = input_array(file)
 function day14_part1(input){
@@ -62,14 +56,14 @@ function day14_part2(input){
 		_ones,
 		_zeroes,
 		_xes,
-		_memAddress;
+		_memAddress,
+		_sum;
 	
 	var _memory = ds_map_create();
+	_sum[0] = 0;
 	
-	var b = 0, t = get_timer();
 	for( var i = 0; i < array_length(input); i++ ) {
 		if( string_pos( "mask", input[i] ) > 0 ) {
-			log( "Processing memory block "+string(b++)+"..." );
 			_line = string_strip( input[i], "mask = " );
 			_ones = "";
 			_zeroes = "";
@@ -97,32 +91,33 @@ function day14_part2(input){
 			_line = string_split( _line, " ", type_real );
 			
 			_memAddress = (_line[0] | bindec(_ones));
-			_memAddress &= ~bindec(_zeroes); // Flip X:s to 0:s
-			_memory[? _memAddress] = _line[1];
+			_memAddress &= ~bindec(_zeroes); 
 			
-			day14_malloc( _memory, _memAddress, _xes, _line[1], 0 );
+			day14_malloc( _memory, _memAddress, _xes, _line[1], 0, _sum );
 		}
 	}
 	
-	log( "Done in "+string((get_timer()-t)/1000)+"ms" );
-	log( "Calculating sum..." );
-	t = get_timer();
-	var _sum = 0;
-	for( var _key = ds_map_find_first(_memory); !is_undefined(_key); _key = ds_map_find_next(_memory,_key) ) {
-		_sum += _memory[? _key];
-	}
-	log( "Done in "+string((get_timer()-t)/1000)+"ms" );
-	
-	return _sum;
+	return _sum[0];
 }
 
-function day14_malloc( mem, address, mask, value, n ) {
+function day14_malloc( mem, address, mask, value, n, s ) {
 	if( n == array_length(mask) ) return;
 	
+	if( !is_undefined(mem[? address]) ) {
+		s[@ 0] -= mem[? address];
+	}
+	
+	s[@ 0] += value;
 	mem[? address] = value;
-	day14_malloc( mem, address, mask, value, n+1 );
+	day14_malloc( mem, address, mask, value, n+1,s  );
 	
 	address |= 1 << mask[n];
+	
+	if( !is_undefined(mem[? address]) ) {
+		s[@ 0] -= mem[? address];
+	}
+	
+	s[@ 0] += value;
 	mem[? address] = value;
-	day14_malloc( mem, address, mask, value, n+1 );
+	day14_malloc( mem, address, mask, value, n+1, s );
 }
