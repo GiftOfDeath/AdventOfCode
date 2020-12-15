@@ -45,7 +45,13 @@ function bindec(binstr) {
 	return _dec;
 }
 
-
+function ms_to_mmss( time ) {
+	var _ms = time/1000,
+		_m = _ms div 60000,
+		_s = (_ms / 1000) % 60;
+	
+	return string_replace_all(string_format(_m, 3, 0), " ", "0" )+"m "+string_replace_all(string_format(_s, 2, 3), " ", "0" )+"s";
+}
 
 
 
