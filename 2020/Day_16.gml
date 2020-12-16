@@ -24,22 +24,13 @@ function day16_part1( tickets, ranges ) {
 				_joinedRanges[| i] = [ min(_joinedRanges[| i][0], _joinedRanges[| j][0]), 
 					                   max(_joinedRanges[| i][1], _joinedRanges[| j][1]) ];
 				ds_list_delete( _joinedRanges, j );
-				i = 0;
+				i = -1; // reset the loop
 				break;
 			}
 		}
 	}
 	
-	// check if we can join the last 2 ranges that for whatever reason didn't get joined in the above loop
-	// (would be nice if we could that inside the loop though but I cba to figure it out)
-	if( in_range( min(_joinedRanges[| 0][0], _joinedRanges[| 1][0]), max(_joinedRanges[| 0][1], _joinedRanges[| 1][1]), max(_joinedRanges[| 0][0], _joinedRanges[| 1][0]) ) ||
-		in_range( min(_joinedRanges[| 0][0], _joinedRanges[| 1][0]), max(_joinedRanges[| 0][1], _joinedRanges[| 1][1]), min(_joinedRanges[| 0][1], _joinedRanges[| 1][1]) ) ) {
-				
-		_joinedRanges[| 0] = [ min(_joinedRanges[| 0][0], _joinedRanges[| 1][0]), 
-				               max(_joinedRanges[| 0][1], _joinedRanges[| 1][1]) ];
-		ds_list_delete( _joinedRanges, 1 );
-	}
-		
+	// Check which tickets and their values don't fit in the ranges
 	var _isValid = true;
 	for( var i = 0; i < ds_list_size(tickets); i++ ) {
 		_isValid = true;
