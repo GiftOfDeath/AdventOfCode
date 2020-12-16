@@ -68,6 +68,7 @@ function day16_part2(myTicket,tickets,ranges) {
 	
 	// Fill the _PossibleFields array with all the keys to start off
 	var _allFields = ds_list_create();
+	
 	for( var _key = ds_map_find_first(ranges); !is_undefined(_key); _key = ds_map_find_next(ranges,_key) ) {
 		ds_list_add( _allFields, _key );
 	}
@@ -76,6 +77,8 @@ function day16_part2(myTicket,tickets,ranges) {
 		_possibleFields[i] = ds_list_create();
 		ds_list_copy( _possibleFields[i], _allFields );
 	}
+	
+	ds_list_destroy( _allFields );
 	
 	// Narrow down the possible names for every field
 	var _range, _value;
@@ -123,11 +126,16 @@ function day16_part2(myTicket,tickets,ranges) {
 		}
 	}
 	
-	// Get the product of the values from my ticket from fields related to departure
+	ds_list_destroy( _solved );
+	
+	// Get the product of the values from my ticket from fields related to departure.
+	// Also deletes the data structures as we don't need them anymore
 	for( var i = 0; i < array_length(myTicket); i++ ) {
 		if( string_pos( "departure", _possibleFields[i][| 0] ) > 0 ) {
 			_product *= myTicket[i];
 		}
+		
+		ds_list_destroy( _possibleFields[i] );
 	}
 	
 	return _product;
