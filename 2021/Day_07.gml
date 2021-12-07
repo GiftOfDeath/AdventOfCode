@@ -1,6 +1,6 @@
 // VM:
 //  P1 solve avg. time: 0.67ms
-//  P2 solve avg. time: 1.50ms
+//  P2 solve avg. time: 2.23ms
 
 // YYC: TBD, can't get working
 
