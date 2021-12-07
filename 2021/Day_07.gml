@@ -28,18 +28,21 @@ function day_07_part1(crabs) {
 	return "Ideal position: "+string(_median)+"; Total fuel cost: "+string(_fuelTotal);
 }
 
-function day_07_part2(crabs) {
-	array_sort( crabs, true );
-	
+function day_07_part2(crabs) {	
 	var _l = array_length(crabs),
-		_average = array_average( crabs, true ),
-		_fuelTotal = 0,
+		_mean = array_mean( crabs, false ),
+		_means = [floor(_mean),ceil(_mean)],
+		_fuelTotal = [0,0],
 		_travel;
 	
-	for( var i = 0; i < _l; i++ ) {
-		_travel = abs(crabs[i]-_average);
-		_fuelTotal += triangular_number( _travel );
+	for( var i = 0; i < _l; i++ ) {	
+		_travel = abs(crabs[i]-_means[0]);
+		_fuelTotal[0] += triangular_number( _travel );
+		
+		_travel = abs(crabs[i]-_means[1]);
+		_fuelTotal[1] += triangular_number( _travel );
 	}
 	
-	return "Ideal position: "+string(_average)+"; Total fuel cost: "+string(_fuelTotal);
+	var _answer = (_fuelTotal[0] < _fuelTotal[1]) ? 0 : 1;
+	return "Ideal position: "+string(_means[_answer])+"; Total fuel cost: "+string(_fuelTotal[_answer]);
 }
