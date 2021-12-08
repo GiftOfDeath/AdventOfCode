@@ -1,6 +1,6 @@
 // VM:
 //  P1 solve avg. time: 0.71ms; median: 0.67ms
-//  P2 solve avg. time: 16.42ms; median: 15.62ms
+//  P2 solve avg. time: 9.71ms; median: 8.53ms
 
 // YYC: TBD, can't get working
 
@@ -99,6 +99,20 @@ function day_08_solve_line( input ) {
 		_bin = 0;
 		_dLen = string_length(_line[1][i]);
 		
+		if( _dLen == 2 ) {
+			_number += "1";
+			continue;
+		}else if( _dLen == 3 ) {
+			_number += "7";
+			continue;
+		}else if( _dLen == 4 ) {
+			_number += "4";
+			continue;
+		}else if( _dLen == 7 ) {
+			_number += "8";
+			continue;
+		}
+		
 		for( var j = 1; j <= _dLen; j++ ) {
 			switch( string_byte_at(_line[1][i], j) ) {
 				case 97: _bin |= 1;  break;
@@ -111,33 +125,20 @@ function day_08_solve_line( input ) {
 			}
 		}
 		
-			
-		if( _bin == _knownDigits[0] ) {
-			_number += "1";
-		} else 
-		if( _bin == _knownDigits[1] ) {
-			_number += "4";
-		} else 
-		if( _bin == _knownDigits[2] ) {
-			_number += "7";
-		} else 
-		if( _bin == _knownDigits[3] ) {
-			_number += "8";
-		} else 
-		if( matching_bits( _bin, _knownDigits[3], 7 ) == 6 ) {
-			if( matching_bits( _bin, _knownDigits[1], 7 ) == 4 ) {
+		if( _dLen == 6 ) {
+			if( _knownDigits[1] & ~_bin == 0 ) {
 				_number += "9";
 			} else 
-			if( matching_bits( _bin, _knownDigits[2], 7 ) == 3 ) {
+			if( _knownDigits[2] & ~_bin == 0 ) {
 				_number += "0";
 			} else {
 				_number += "6";
 			}
 		} else {
-			if( matching_bits( _bin, _knownDigits[0], 7 ) == 2 ) {
+			if( _knownDigits[0] & ~_bin == 0 ) {
 				_number += "3";
 			} else 
-			if( matching_bits( _bin, _knownDigits[1], 7 ) == 3 ) {
+			if( ( _knownDigits[1] & ~_knownDigits[0] ) & ~_bin == 0 ) {
 				_number += "5"; 
 			} else {
 				_number += "2";
@@ -146,15 +147,4 @@ function day_08_solve_line( input ) {
 	}
 	
 	return real(_number);
-}
-
-function matching_bits( val1, val2, length ) {
-	var _c = 0;
-	for( var i = 0; i < length; i++ ) {
-		if( ( ( ( val1 >> i ) & 1 ) == 1 ) && ( ( ( val2 >> i ) & 1 ) == 1 ) ) {
-			_c++;
-		}
-	}
-	
-	return _c;
 }
