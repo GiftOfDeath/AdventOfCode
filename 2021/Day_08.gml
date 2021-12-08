@@ -1,6 +1,6 @@
 // VM:
-//  P1 solve avg. time: 0.88ms
-//  P2 solve avg. time: 84.02ms
+//  P1 solve avg. time: 0.71ms; median: 0.67ms
+//  P2 solve avg. time: 65.58ms; median: 61.85ms
 
 // YYC: TBD, can't get working
 
@@ -59,18 +59,19 @@ function day_08_solve_line( input ) {
 		_l = array_length(_line[0]);
 		
 	// Get binary values of the numbers in the first part of the input line
+	// 97...103 = a...g, optimisation against string comparisons
 	for ( var i = 0; i < _l; i++ ) {
 		_bin = 0;
 		_dLen = string_length(_line[0][i]);
 		for( var j = 1; j <= _dLen; j++ ) {
-			switch( string_char_at(_line[0][i], j) ) {
-				case "a": _bin |= 1;  break;
-				case "b": _bin |= 2;  break;
-				case "c": _bin |= 4;  break;
-				case "d": _bin |= 8;  break;
-				case "e": _bin |= 16; break;
-				case "f": _bin |= 32; break;
-				case "g": _bin |= 64; break;
+			switch( string_byte_at(_line[0][i], j) ) {
+				case 97: _bin |= 1;  break;
+				case 98: _bin |= 2;  break;
+				case 99: _bin |= 4;  break;
+				case 100: _bin |= 8;  break;
+				case 101: _bin |= 16; break;
+				case 102: _bin |= 32; break;
+				case 103: _bin |= 64; break;
 			}
 		}
 		
@@ -85,6 +86,7 @@ function day_08_solve_line( input ) {
 	}
 	
 	// Get binary values of the numbers on the display
+	// 97...103 = a...g, optimisation against string comparisons
 	_l = array_length(_line[1]);
 	for( var i = 0; i < _l; i++ ) {
 		_bin = 0;
@@ -92,71 +94,49 @@ function day_08_solve_line( input ) {
 		
 		for( var j = 1; j <= _dLen; j++ ) {
 			
-			switch( string_char_at(_line[1][i], j) ) {
-				case "a": _bin |= 1;  break;
-				case "b": _bin |= 2;  break;
-				case "c": _bin |= 4;  break;
-				case "d": _bin |= 8;  break;
-				case "e": _bin |= 16; break;
-				case "f": _bin |= 32; break;
-				case "g": _bin |= 64; break;
+			switch( string_byte_at(_line[1][i], j) ) {
+				case 97: _bin |= 1;  break;
+				case 98: _bin |= 2;  break;
+				case 99: _bin |= 4;  break;
+				case 100: _bin |= 8;  break;
+				case 101: _bin |= 16; break;
+				case 102: _bin |= 32; break;
+				case 103: _bin |= 64; break;
 			}
 		}
 		
 		_display[i] = _bin;
 	}
 	
-	_l = array_length( _mysteryDigits );
-	var i = 0,
-		_pL;
-	
 	// Figure out which value corresponds which number on the display by
 	// seeing how many parts of the digits match each other
-	while( i < _l ) {
-		_pL = _l
-		
-		if( _l == 6 &&
-			matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 3 && 
+	_l = array_length( _mysteryDigits );
+	for( var i = 0; i < _l; i++ ) {
+		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 4 && 
+			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 6 ) {
+			_knownDigits[9] = _mysteryDigits[i];
+		} else
+		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 2 && 
+			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 2 ) {
+			_knownDigits[2] = _mysteryDigits[i];
+		} else
+		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 3 && 
 			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 3 && 
 			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 6 ) {
 			_knownDigits[0] = _mysteryDigits[i];
-			array_delete( _mysteryDigits, i, 1 );
 		} else
-		if( _l == 5 &&
-			matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 2 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 2 ) {
-			_knownDigits[2] = _mysteryDigits[i];
-			array_delete( _mysteryDigits, i, 1 );
-		} else
-		if( _l == 4 &&
-			matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 3 && 
+		if( matching_bits( _mysteryDigits[i], _knownDigits[1], 7 ) == 1 && 
 			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 2 && 
 			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 6 ) {
 			_knownDigits[6] = _mysteryDigits[i];
-			array_delete( _mysteryDigits, i, 1 );
 		} else
-		if( _l == 3 &&
-			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 3 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 4 ) {
-			_knownDigits[9] = _mysteryDigits[i];
-			array_delete( _mysteryDigits, i, 1 );
-		} else
-		if( _l == 2 &&
+		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 3 && 
 			matching_bits( _mysteryDigits[i], _knownDigits[1], 7 ) == 1 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[2], 7 ) == 3) {
+			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 5 ) {
 			_knownDigits[5] = _mysteryDigits[i];
-			array_delete( _mysteryDigits, i, 1 );
-		} else
-		if( _l == 1 ) {
+		} else {
 			_knownDigits[3] = _mysteryDigits[i];
-			array_delete( _mysteryDigits, i, 1 );
-			break;
 		}
-		
-		_l = array_length( _mysteryDigits );
-		
-		if( _pL == _l ) i++;
-		if( i >= _l ) i = 0;
 	}
 	
 	var _number = "";
@@ -166,7 +146,7 @@ function day_08_solve_line( input ) {
 		for( var j = 0; j < 10; j++ ) {
 			if( _display[i] == _knownDigits[j] ) {
 				_number += string(j);
-				break;;
+				break;
 			}
 		}
 	}
