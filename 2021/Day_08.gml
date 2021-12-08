@@ -1,6 +1,6 @@
 // VM:
 //  P1 solve avg. time: 0.71ms; median: 0.67ms
-//  P2 solve avg. time: 65.58ms; median: 61.85ms
+//  P2 solve avg. time: 16.42ms; median: 15.62ms
 
 // YYC: TBD, can't get working
 
@@ -51,49 +51,55 @@ function day_08_part2( input ) {
 
 function day_08_solve_line( input ) {
 	var _line = input;
-	var _knownDigits = array_create( array_length(_line), 0 ),
-		_mysteryDigits = [],
-		_display = [],
+	var _knownDigits = [],
 		_bin,
 		_dLen,
+		_count,
 		_l = array_length(_line[0]);
 		
 	// Get binary values of the numbers in the first part of the input line
+	// Only relevant numbers are 1, 4, 7, and 8, because they have unique
+	// number of segments turned on
 	// 97...103 = a...g, optimisation against string comparisons
 	for ( var i = 0; i < _l; i++ ) {
 		_bin = 0;
+		_count = 0;
 		_dLen = string_length(_line[0][i]);
-		for( var j = 1; j <= _dLen; j++ ) {
-			switch( string_byte_at(_line[0][i], j) ) {
-				case 97: _bin |= 1;  break;
-				case 98: _bin |= 2;  break;
-				case 99: _bin |= 4;  break;
-				case 100: _bin |= 8;  break;
-				case 101: _bin |= 16; break;
-				case 102: _bin |= 32; break;
-				case 103: _bin |= 64; break;
-			}
-		}
 		
-		switch( _dLen ) {
-			case 2: _knownDigits[1] = _bin; break;
-			case 3: _knownDigits[7] = _bin; break;
-			case 4: _knownDigits[4] = _bin; break;
-			case 7: _knownDigits[8] = _bin; break;
+		if( _dLen == 2 || _dLen == 3 || _dLen == 4 || _dLen == 7 ) {
+			for( var j = 1; j <= _dLen; j++ ) {
+				switch( string_byte_at(_line[0][i], j) ) {
+					case 97: _bin |= 1;  break;
+					case 98: _bin |= 2;  break;
+					case 99: _bin |= 4;  break;
+					case 100: _bin |= 8;  break;
+					case 101: _bin |= 16; break;
+					case 102: _bin |= 32; break;
+					case 103: _bin |= 64; break;
+				}
+			}
+		
+			switch( _dLen ) {
+				case 2: _knownDigits[0] = _bin; break; // 1
+				case 4: _knownDigits[1] = _bin; break; // 4
+				case 3: _knownDigits[2] = _bin; break; // 7
+				case 7: _knownDigits[3] = _bin; break; // 8
+			}
 			
-			default: _mysteryDigits[array_length(_mysteryDigits)] = _bin; break;
+			_count++;
+			if( _count == 4 ) break;
 		}
 	}
 	
 	// Get binary values of the numbers on the display
 	// 97...103 = a...g, optimisation against string comparisons
+	var _number = "";
 	_l = array_length(_line[1]);
 	for( var i = 0; i < _l; i++ ) {
 		_bin = 0;
 		_dLen = string_length(_line[1][i]);
 		
 		for( var j = 1; j <= _dLen; j++ ) {
-			
 			switch( string_byte_at(_line[1][i], j) ) {
 				case 97: _bin |= 1;  break;
 				case 98: _bin |= 2;  break;
@@ -105,50 +111,38 @@ function day_08_solve_line( input ) {
 			}
 		}
 		
-		_display[i] = _bin;
-	}
-	
-	// Figure out which value corresponds which number on the display by
-	// seeing how many parts of the digits match each other
-	_l = array_length( _mysteryDigits );
-	for( var i = 0; i < _l; i++ ) {
-		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 4 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 6 ) {
-			_knownDigits[9] = _mysteryDigits[i];
-		} else
-		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 2 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 2 ) {
-			_knownDigits[2] = _mysteryDigits[i];
-		} else
-		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 3 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 3 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 6 ) {
-			_knownDigits[0] = _mysteryDigits[i];
-		} else
-		if( matching_bits( _mysteryDigits[i], _knownDigits[1], 7 ) == 1 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[7], 7 ) == 2 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 6 ) {
-			_knownDigits[6] = _mysteryDigits[i];
-		} else
-		if( matching_bits( _mysteryDigits[i], _knownDigits[4], 7 ) == 3 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[1], 7 ) == 1 && 
-			matching_bits( _mysteryDigits[i], _knownDigits[8], 7 ) == 5 ) {
-			_knownDigits[5] = _mysteryDigits[i];
-		} else {
-			_knownDigits[3] = _mysteryDigits[i];
-		}
-	}
-	
-	var _number = "";
-	
-	_l = array_length(_display);
-	for( var i = 0; i < _l; i++ ) {
-		for( var j = 0; j < 10; j++ ) {
-			if( _display[i] == _knownDigits[j] ) {
-				_number += string(j);
-				break;
+			
+		if( _bin == _knownDigits[0] ) {
+			_number += "1";
+		} else 
+		if( _bin == _knownDigits[1] ) {
+			_number += "4";
+		} else 
+		if( _bin == _knownDigits[2] ) {
+			_number += "7";
+		} else 
+		if( _bin == _knownDigits[3] ) {
+			_number += "8";
+		} else 
+		if( matching_bits( _bin, _knownDigits[3], 7 ) == 6 ) {
+			if( matching_bits( _bin, _knownDigits[1], 7 ) == 4 ) {
+				_number += "9";
+			} else 
+			if( matching_bits( _bin, _knownDigits[2], 7 ) == 3 ) {
+				_number += "0";
+			} else {
+				_number += "6";
 			}
-		}
+		} else {
+			if( matching_bits( _bin, _knownDigits[0], 7 ) == 2 ) {
+				_number += "3";
+			} else 
+			if( matching_bits( _bin, _knownDigits[1], 7 ) == 3 ) {
+				_number += "5"; 
+			} else {
+				_number += "2";
+			}
+		} 
 	}
 	
 	return real(_number);
