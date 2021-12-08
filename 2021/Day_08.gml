@@ -1,6 +1,6 @@
 // VM:
-//  P1 solve avg. time: 0.73ms
-//  P2 solve avg. time: 2.23ms
+//  P1 solve avg. time: 0.88ms
+//  P2 solve avg. time: 84.02ms
 
 // YYC: TBD, can't get working
 
@@ -110,7 +110,8 @@ function day_08_solve_line( input ) {
 	var i = 0,
 		_pL;
 	
-	// Figure out which value corresponds which number on the display
+	// Figure out which value corresponds which number on the display by
+	// seeing how many parts of the digits match each other
 	while( i < _l ) {
 		_pL = _l
 		
