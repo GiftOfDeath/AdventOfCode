@@ -1,6 +1,6 @@
 // VM:
-//  P1 solve avg. time: 9.63ms; median: 8.42ms
-//  P2 solve avg. time: 0.88ms; median: 0.85ms
+//  P1 solve avg. time: 8.78ms; median: 8.42ms
+//  P2 solve avg. time: 0.87ms; median: 0.78ms
 
 // YYC: TBD, can't get working
 
@@ -21,7 +21,7 @@ function day_10_part1(input) {
 		_eoln,
 		_chr,
 		_score = 0,
-		_corruptLines = [],
+		_corruptLines = ds_stack_create(),
 		_openingsList = [];
 		
 	var _l = array_length(input);
@@ -55,7 +55,7 @@ function day_10_part1(input) {
 						case 62:  _score += 25137; break;
 					}
 					
-					_corruptLines[ array_length(_corruptLines) ] = i;
+					ds_stack_push(_corruptLines, i);
 					break;
 				}
 			}
@@ -64,15 +64,21 @@ function day_10_part1(input) {
 		_openingsList[i] = _opening;
 	}
 	
+	// Let's pass the opening bracket stacks to part 2
+	// so we don't need to parse them a 2nd time for no reason
 	return [_score, _openingsList, _corruptLines];
 }
 
 function day_10_part2(input, corruptLines) {
 	// Dispose of the corrupt lines
-	for( var i = array_length(corruptLines)-1; i >= 0; i-- ) {
-		ds_stack_destroy( input[ corruptLines[i] ] );
-		array_delete( input, corruptLines[i], 1 );
+	var _line;
+	while( !ds_stack_empty(corruptLines) ) {
+		_line = ds_stack_pop(corruptLines);
+		ds_stack_destroy( input[ _line ] );
+		array_delete( input, _line, 1 );
 	}
+	
+	ds_stack_destroy(corruptLines);
 	
 	var _score = [];
 	
