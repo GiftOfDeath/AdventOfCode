@@ -25,10 +25,11 @@ function array_sum( array ) {
 }
 
 function array_median( array ) {
+	array_sort(array, false);
 	return array[ array_length(array) div 2 ];
 }
 
-function array_average( array, Div ) {
+function array_mean( array, Div ) {
 	var _sum = 0,
 		_l = array_length(array);
 	for( var i = 0; i < _l; i++ ) {

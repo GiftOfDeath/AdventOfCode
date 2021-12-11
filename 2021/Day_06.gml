@@ -1,8 +1,10 @@
 // VM:
-// P1 solve avg. time: 0.56ms
-// P2 solve avg. time: 1.88ms
+//  P1 solve avg. time: 0.40ms; median: 0.37m
+//  P2 solve avg. time: 1.27ms; median: 1.21ms
 
-// YYC: TBD, can't get working
+// YYC: 
+//  P1 solve avg. time: 0.08ms; median: 0.07ms
+//  P2 solve avg. time: 0.24ms; median: 0.22ms
 
 function day_06_input(){
 	var _arr = [],
@@ -17,7 +19,7 @@ function day_06_input(){
 		_fish[ _arr[i] ]++;
 	}
 	
-	// log( _fish );
+	file_text_close(_f);
 	return _fish;
 }
 

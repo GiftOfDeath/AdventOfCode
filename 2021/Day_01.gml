@@ -1,8 +1,10 @@
 // VM:
-//  P1 solve avg. time: 2.72ms
-//  P2 solve avg. time: 2.85ms
+//  P1 solve avg. time: 1.21ms; median: 1.14ms
+//  P2 solve avg. time: 2.25ms; median: 2.16ms
 
-// YYC: TBD, can't get working
+// YYC: 
+//  P1 solve avg. time: 0.18ms; median: 0.17ms
+//  P2 solve avg. time: 0.47ms; median: 0.44ms
 
 function day_01_input(){
 	var _arr = [],

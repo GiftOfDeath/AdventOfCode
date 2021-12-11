@@ -1,16 +1,18 @@
 // VM:
-//  P1 solve avg. time: 0.67ms
-//  P2 solve avg. time: 2.23ms
+//  P1 solve avg. time: 0.90ms; median: 0.85ms
+//  P2 solve avg. time: 2.17ms; median: 2.11ms
 
-// YYC: TBD, can't get working
+// YYC: 
+//  P1 solve avg. time: 0.44ms; median: 0.42ms
+//  P2 solve avg. time: 0.33ms; median: 0.31ms
 
 function day_07_input(){
 	var _arr = [],
 	_f = file_text_open_read( "07.txt" );
 	
 	_arr = string_split( file_text_readln( _f ), ",", type_real );
-	file_text_close( _f );
 	
+	file_text_close( _f );
 	return _arr;
 }
 

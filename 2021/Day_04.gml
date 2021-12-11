@@ -1,8 +1,10 @@
 // VM:
-//  P1 solve avg. time: 49.23ms
-//  P2 solve avg. time: 151.05ms
+//  P1 solve avg. time: 31.78ms;  median: 32.03ms
+//  P2 solve avg. time: 151.98ms; median: 152.87ms
 
-// YYC: TBD, can't get working
+// YYC: 
+//  P1 solve avg. time: 5.71ms;  median: 5.61ms
+//  P2 solve avg. time: 26.82ms; median: 26.62ms
 
 function day_04_input(){
 	var _f = file_text_open_read( "04.txt" );
@@ -32,7 +34,7 @@ function day_04_input(){
 
 function day_04_part1( input ) {
 	var _draws = input[0],
-		_boards = json_parse(json_stringify(input[1]));
+		_boards = input[1];
 	
 	for( var _i = 0; _i < array_length(_draws); _i++ ) {
 		for( var _j = 0; _j < array_length(_boards); _j++ ) {
@@ -47,7 +49,7 @@ function day_04_part1( input ) {
 
 function day_04_part2( input ) {
 	var _draws = input[0],
-		_boards = json_parse(json_stringify(input[1])),
+		_boards = input[1],
 		_skips = ds_list_create();
 	
 	var _answer = "";

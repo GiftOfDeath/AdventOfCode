@@ -8,3 +8,9 @@ function log(){
 	
 	show_debug_message( _str );
 }
+
+function log_array( array ) {
+	for( var i = 0; i < array_length( array ); i++ ) {
+		show_debug_message( array[i] );
+	}
+}

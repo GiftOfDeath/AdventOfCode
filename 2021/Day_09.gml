@@ -2,7 +2,9 @@
 //  P1 solve avg. time: 47.20ms; median: 47.88ms
 //  P2 solve avg. time: 56.18ms; median: 58.73ms
 
-// YYC: TBD, can't get working
+// YYC: 
+//  P1 solve avg. time: 11.97ms; median: 10.51ms
+//  P2 solve avg. time: 30.05ms; median: 25.92ms
 
 function day_09_input(){
 	var _grid = [],
@@ -17,7 +19,7 @@ function day_09_input(){
 			_grid[_h][i] = real( string_char_at( _line, i+1 ) );
 	}
 	
-	log_array(_grid);
+	file_text_close( _f );
 	return _grid;
 }
 
