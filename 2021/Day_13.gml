@@ -1,12 +1,12 @@
 // VM:
-//  P1 solve avg. time: 16.772ms; median: 16.721ms
-//  P2 solve avg. time: 66.418ms; median: 66.393ms
-//  Input parse time: 14.374ms; median: 14.295ms
+//  P1 solve avg. time: 5.285ms; median: 4.637ms
+//  P2 solve avg. time: 21.695ms; median: 20.116ms
+//  Input parse time: 19.810ms; median: 19.407ms
 
 // YYC: 
-//  P1 solve avg. time: 15.639ms; median: 15.233ms
-//  P2 solve avg. time: 59.951ms; median: 59.212ms
-//  Input parse time: 8.610ms; median: 8.429ms
+//  P1 solve avg. time: 3.860ms; median: 3.512ms
+//  P2 solve avg. time: 8.562ms; median: 7.994ms
+//  Input parse time: 12.187ms; median: 11.500ms
 
 // This is a really wild one because I figured I'd try to do it without
 // using a 2d array or grid xD
@@ -16,17 +16,19 @@
 #macro Y 1
 
 function day_13_input( file ){
-	var _dots = ds_map_create(),
+	var _dots = [],
 		_folds = [],
 		_f = file_text_open_read( file );
 	
-	var _line;
+	var _line,
+		_i = 0;
 	while( true ) {
 		_line = string_strip( file_text_readln( _f ), ["\n","\r"] );
 		
 		if( _line == "" ) break;
 		
-		_dots[? _line] = string_split( _line, ",", type_real );
+		_i++;
+		array_push( _dots, string_split( _line, ",", type_real ) );
 	}
 	
 	var _axis,
@@ -48,38 +50,46 @@ function day_13_input( file ){
 
 function day_13_part1(input) {
 	var _dots = input[0],
-		_folds = input[1];
+		_folds = input[1],
+		_newDot,
+		_finalDots = ds_map_create();
 	
-	ds_map_size( _dots );
-	
-	if( _folds[0][0] == X ) {
-		fold_xaxis( _dots, _folds[0][1] );
-	}else{
-		fold_yaxis( _dots, _folds[0][1] );
+	var _l = array_length( _dots );
+	for( var i = 0; i < _l; i++ ) {
+		_newDot = fold_dot( _dots[i], _folds[0] );
+		
+		_finalDots[? string(_newDot[0])+","+string(_newDot[1])] = _newDot;
 	}
 	
-	var _answer = ds_map_size( _dots );
-	ds_map_destroy( _dots );
+	var _answer = ds_map_size( _finalDots );
+	
+	ds_map_destroy( _finalDots );
+	
 	return _answer;
 }
 
 function day_13_part2(input) {
 	var _dots = input[0],
-		_folds = input[1];
+		_folds = input[1],
+		_newDot,
+		_finalDots = ds_map_create();
 	
-	var _l = array_length(_folds);
+	var _l = array_length( _dots ),
+		_totalFolds = array_length( _folds );
 	for( var i = 0; i < _l; i++ ) {
-		if( _folds[i][0] == X ) {
-			fold_xaxis( _dots, _folds[i][1] );
-		}else{
-			fold_yaxis( _dots, _folds[i][1] );
+		_newDot = _dots[i];
+		for( var j = 0; j < _totalFolds; j++ ) {
+			_newDot = fold_dot( _newDot, _folds[j] );
 		}
+		
+		_finalDots[? string(_newDot[0])+","+string(_newDot[1])] = _newDot;
 	}
 	
 	var _display = [],
 		_dot;
-	for( var key = ds_map_find_first( _dots ); key != undefined; key = ds_map_find_next( _dots, key ) ) {
-		_dot = _dots[? key];
+		
+	for( var key = ds_map_find_first( _finalDots ); key != undefined; key = ds_map_find_next( _finalDots, key ) ) {
+		_dot = _finalDots[? key];
 		
 		if( array_length(_display) <= _dot[1] ) {
 			_display[_dot[1]] = "";
@@ -103,8 +113,23 @@ function day_13_part2(input) {
 		_answer += "\n"+_display[i];
 	}
 	
-	ds_map_destroy( _dots );
+	ds_map_destroy( _finalDots );
 	return _answer;
+}
+
+function fold_dot( dot, fold ) {
+	gml_pragma("forceinline");
+	if( fold[0] == X ) {
+		if( dot[0] > fold[1] )
+			return [ fold[1]-(dot[0]-fold[1]) ,dot[1] ];
+		else
+			return dot;
+	}
+	
+	if( dot[1] > fold[1] )
+		return [ dot[0], fold[1]-(dot[1]-fold[1]) ];
+	else
+		return dot;
 }
 
 function fold_xaxis( map, xx ) {
