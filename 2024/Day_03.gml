@@ -71,7 +71,8 @@ function day03_part2(input){
 	// Make sure there are no don't()s before the first mul()
 	_dontdo = string_pos( "don't()", input );
 	if( _dontdo < _i ) {
-		_i = string_pos_ext( "mul(", input, string_pos( "do()", input ) );
+		_i = string_pos_ext( "mul(", input, string_pos( "do()", input ) )+3;
+		_dontdo = string_pos_ext( "don't()", input, _i );
 	}
 	
 	while( _i < _l ) {
