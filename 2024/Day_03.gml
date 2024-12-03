@@ -1,9 +1,9 @@
 // VM:
-//   P1 solve avg. time: 61.74ms
-//   P2 solve avg. time: 33.05ms
+//   P1 solve avg. time: 61.24ms
+//   P2 solve avg. time: 29.70ms
 // YYC:
-//   P1 solve avg. time: 67.18ms
-//   P2 solve avg. time: 35.06ms
+//   P1 solve avg. time: 56.69ms
+//   P2 solve avg. time: 27.41ms
 
 
 function day03_part1(input){
@@ -68,6 +68,12 @@ function day03_part2(input){
 		_answer = 0,
 		_dontdo;
 	
+	// Make sure there are no don't()s before the first mul()
+	_dontdo = string_pos( "don't()", input );
+	if( _dontdo < _i ) {
+		_i = string_pos_ext( "mul(", input, string_pos( "do()", input ) );
+	}
+	
 	while( _i < _l ) {
 		_i++;
 		
@@ -94,13 +100,15 @@ function day03_part2(input){
 			}
 		}
 		
-		// Find the next don't and mul functions
-		_dontdo = string_pos_ext( "don't()", input, _i );
 		_i = string_pos_ext( "mul(", input, _i );
 		
 		// If don't() function before mul(x,y), skip to the next do() if any to continue mul()
 		if( _dontdo < _i ) {
 			_i = string_pos_ext( "do()", input, _i );
+		
+			// Find the next don't and mul functions
+			_dontdo = string_pos_ext( "don't()", input, _i );
+			_dontdo = ( _dontdo == 0 ) ? _l : _dontdo; // failsafe in case there are no more don't() functions
 			
 			if( _i > 0 ) {
 				_i = string_pos_ext( "mul(", input, _i );
