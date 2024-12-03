@@ -2,6 +2,11 @@ function string_char_at_is(str,index,char){
 	return string_char_at(str,index) == char;
 }
 
+function string_char_at_is_digit(str,index){
+	var _byte = string_byte_at(str,index);
+	return _byte >= 48 && _byte <= 57;
+}
+
 function string_strip(str,substr) {
 	if( !is_array(substr) ) {
 		return string_replace_all(str, substr, "");
