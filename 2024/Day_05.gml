@@ -46,7 +46,7 @@ function day05_part1(input){
 			}
 			
 			if( j == _manual_length-1 ) {
-				_answer += _manual[ (_manual_length-1) div 2 ];
+				_answer += _manual[ _manual_length div 2 ];
 				// Remove the valid manual from the input to avoid redundant validation in part 2
 				array_delete( input, i, 1 );
 			}
@@ -102,7 +102,7 @@ function day05_part2(input){
 			
 			// Sort the manual pages and find the page in the middle
 			_sort_pages( _manual, _rules );
-			_answer += _manual[ (_manual_length-1) div 2 ];
+			_answer += _manual[ _manual_length div 2 ];
 	}
 	
 	ds_map_destroy( _rules );
