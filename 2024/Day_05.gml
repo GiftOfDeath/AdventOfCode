@@ -1,6 +1,6 @@
 // VM:
-//   P1 solve avg. time: 10.07ms
-//   P2 solve avg. time: 4.88ms
+//   P1 solve avg. time: 9.94ms
+//   P2 solve avg. time: 4.64ms
 // YYC:
 //   P1 solve avg. time: 3.56ms
 //   P2 solve avg. time: 2.88ms
@@ -34,16 +34,14 @@ function day05_part1(input){
 			
 			// If sorting rules for the page has been defined, check if 
 			// there are pages to the left of it that shouldn't be there
-			if( _page_rules != undefined ) {
-				for( var k = 0; k < j; k++ ) {
-					if( array_contains( _page_rules, _manual[k] ) ) {
-						_valid = false;
-						break;
-					}
+			for( var k = 0; k < j; k++ ) {
+				if( array_contains( _page_rules, _manual[k] ) ) {
+					_valid = false;
+					break;
 				}
-				
-				if( !_valid ) break;
 			}
+				
+			if( !_valid ) break;
 			
 			if( j == _manual_length-1 ) {
 				_answer += _manual[ _manual_length div 2 ];
@@ -81,15 +79,13 @@ function day05_part2(input){
 		for( var i = 0; i < _length; i++ ) {
 			var _rule = _sort_rules[? string( _pages[i] )];
 			
-			if( _rule != undefined ) {
-				// Find the left-most page the current page should be left of and
-				// insert it there, if it has rules defined for it
-				for( var j = 0; j < i; j++ ) {
-					if( array_contains( _rule, _pages[j] ) ) {
-						array_insert( _pages, j, _pages[i] );
-						array_delete( _pages, i+1, 1 );
-						break;
-					}
+			// Find the left-most page the current page should be left of and
+			// insert it there, if it has rules defined for it
+			for( var j = 0; j < i; j++ ) {
+				if( array_contains( _rule, _pages[j] ) ) {
+					array_insert( _pages, j, _pages[i] );
+					array_delete( _pages, i+1, 1 );
+					break;
 				}
 			}
 		}
