@@ -12,7 +12,7 @@ function day05_part1(input){
 		_answer = 0;
 	
 	var _new_rule;
-	// Rules format [? page_number] = [ Page that must be first, pages, that, must, be, after ]
+	// Rules format: map[? page_number] = [ pages, that, must, be, after ];	
 	for( var i = 0; i < _pages_start; i++ ) {
 		_new_rule = string_split( input[i], "|" );
 		
