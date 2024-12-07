@@ -3,7 +3,7 @@
 //   P2 solve avg. time: 29.27ms
 // YYC:
 //   P1 solve avg. time: 3.31ms
-//   P2 solve avg. time: 7.84ms
+//   P2 solve avg. time: 5.98ms
 
 
 function day07_part1(input){
@@ -46,7 +46,6 @@ function day07_part1(input){
 		var _numbers = string_split_numbers( string_replace( input[i], ":", "" ), " " );
 		
 		if( try_operators( _numbers[0], _numbers, array_length( _numbers )-1 ) ) {
-			//log( _numbers );
 			_answer += _numbers[0];
 		}
 	}
@@ -107,7 +106,6 @@ function day07_part2(input){
 		
 		// _numbers[0] = the desired end value
 		if( try_operators( _numbers[0], _numbers, array_length(_numbers)-1 ) ) {
-			log( _numbers );
 			_answer += _numbers[0];
 		}
 	}
