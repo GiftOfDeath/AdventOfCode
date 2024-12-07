@@ -1,9 +1,9 @@
 // VM:
 //   P1 solve avg. time: 10.98ms
-//   P2 solve avg. time: 11s 63ms
+//   P2 solve avg. time: 2s 490ms
 // YYC:
-//   P1 solve avg. time: 0ms
-//   P2 solve avg. time: 0ms
+//   P1 solve avg. time: 4.48ms
+//   P2 solve avg. time: 464.21ms
 
 
 function day06_part1(input){
@@ -103,16 +103,16 @@ function day06_part2(input){
 			_move = wrap( 0, 3, _move+1 ); 
 		}
 	}
-	
-	var _new_obstacles = ds_map_create();
-	
+		
 	var _path_len = array_length(_path);
-	var _new_path = ds_map_create();
+	var _new_path1 = ds_map_create(),
+		_new_path2 = ds_map_create(),
+		_new_obstacles = ds_map_create(),
+		_target_path = _new_path1;
 	
 	for( var i = 0; i < _path_len; i++ ) {
 		var _x   = _path[i][0],
-			_y   = _path[i][1],
-			_dir = _path[i][2];
+			_y   = _path[i][1];
 		
 		
 		var _new_obstacle = [ _x, _y ],
@@ -131,7 +131,8 @@ function day06_part2(input){
 		_move = _path[i-1][2];
 		
 		var _new_pos = [];
-		ds_map_clear( _new_path )
+		ds_map_clear( _new_path2 )
+		_target_path = _new_path1;
 		
 		while( true ) {
 			var _new_x = _guard[0] + _moves_lut[_move][0],
@@ -139,25 +140,31 @@ function day06_part2(input){
 		
 			// if the guard would leave the room, break
 			if( !point_in_rectangle( _new_x, _new_y, 0, 0, _width-1, _height-1 ) ) break;
-		
-			if( _obstacles[ _new_x ][ _new_y ] != 1 && !( _new_obstacle[0] == _new_x && _new_obstacle[1] == _new_y ) ) {
+			
+			var _blocked_by_new_obstacle = ( _new_obstacle[0] == _new_x && _new_obstacle[1] == _new_y );
+			if( _blocked_by_new_obstacle ) _target_path = _new_path2;
+			
+			if( _obstacles[ _new_x ][ _new_y ] != 1 && !_blocked_by_new_obstacle ) {
 				_guard[0] = _new_x;
 				_guard[1] = _new_y;
-				
-				_new_pos = string_ext( "{0},{1},{2}", [ _new_x, _new_y, _move ] );
+			} else {
+				_move = wrap( 0, 3, _move+1 ); 
+				_new_pos = string_ext( "{0},{1},{2}", [ _guard[0], _guard[1], _move ] );
 				
 				// check if looping
-				if( _new_path[? _new_pos] == 1 ) {
+				if( _new_path1[? _new_pos] == 1 || _new_path2[? _new_pos] == 1 ) {
 					_answer++;
 					break;
 				}
 				
-				_new_path[? _new_pos] = 1;
-			} else {
-				_move = wrap( 0, 3, _move+1 ); 
+				_target_path[? _new_pos] = 1;
 			}
 		}
 	}
+	
+	ds_map_destroy( _new_obstacles );
+	ds_map_destroy( _new_path1 );
+	ds_map_destroy( _new_path2 );
 		
 	return _answer;
 }
