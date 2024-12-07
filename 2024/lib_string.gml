@@ -34,9 +34,9 @@ function string_split_numbers( str, delimiter, remove_empty = true, max_splits =
 }
 
 
-#macro contains_any      1
-#macro contains_one      2
-#macro contains_all      3
+#macro contains_any	  1
+#macro contains_one	  2
+#macro contains_all	  3
 #macro contains_at_least 4
 #macro contains_exactly  5
 #macro contains_at_most  6
@@ -48,7 +48,7 @@ function string_split_numbers( str, delimiter, remove_empty = true, max_splits =
 /// @param n
 function string_contains() {
 	var contains = ( argument_count < 3 ) ? contains_any : argument[2];
-	var _n       = ( argument_count < 4 ) ? 0 : argument[2];
+	var _n	   = ( argument_count < 4 ) ? 0 : argument[2];
 		
 	var str = argument[0],
 		substr = argument[1];
@@ -65,7 +65,7 @@ function string_contains() {
 			if( contains == contains_any ) return true;
 			if( contains == contains_at_least && _count == _n ) return true;
 			
-			if( contains == contains_one      && _count > 1 ) return false;
+			if( contains == contains_one	  && _count > 1 ) return false;
 			if( contains == contains_at_most  && _count > _n ) return false;
 		}
 	}
@@ -73,4 +73,25 @@ function string_contains() {
 	if( contains == contains_all && array_length(substr) == _count ) return true;
 	
 	return false;
+}
+
+// Time in microseconds
+function timer_to_string( time ) {
+	if( time < 1000 ) {
+		return string(time)+"µs";
+	}
+	
+	if( time/1000 < 1000 ) {
+		return string(time/1000)+"ms";
+	}
+	
+	if( time/1000 > 1000 ) {
+		var _ms = (time / 1000) mod 1000,
+			_s  = (time/1000) div 1000,
+			_m  = _s div 60;
+		
+		return ((_m > 0) ? string_format( _m, 2, 0 )+"min " : "") + ((_s > 0) ? string( floor( _s mod 60 ) )+"s " : "" ) + string( floor(_ms) ) + "ms";
+	}
+	
+	return "what's the time?";
 }
