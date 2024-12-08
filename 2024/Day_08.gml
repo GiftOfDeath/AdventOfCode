@@ -4,8 +4,8 @@
 //   P2 solve avg. time: 1.73ms
 // YYC:
 //   Input parsing time: 825µs
-//   P1 solve avg. time: 138µs
-//   P2 solve avg. time: 324µs
+//   P1 solve avg. time: 122µs
+//   P2 solve avg. time: 275µs
 
 function day08_input(file){
 	var _map = ds_map_create(),
@@ -45,11 +45,13 @@ function day08_part1(input){
 				if( j == k ) continue;
 				
 				var _x_diff = _antennas[j][0] - _antennas[k][0],
-					_y_diff = _antennas[j][1] - _antennas[k][1];
+					_y_diff = _antennas[j][1] - _antennas[k][1],
+					_node_x = _antennas[j][0]+_x_diff,
+					_node_y = _antennas[j][1]+_y_diff;
 				
-				if( point_in_rectangle( _antennas[j][0]+_x_diff, _antennas[j][1]+_y_diff, 0, 0, input[1], input[2] ) ) {
-					if( _antinodes[_antennas[j][0]+_x_diff][_antennas[j][1]+_y_diff] == 0 ) {
-						_antinodes[_antennas[j][0]+_x_diff][_antennas[j][1]+_y_diff] = 1;
+				if( point_in_rectangle( _node_x, _node_y, 0, 0, input[1], input[2] ) ) {
+					if( _antinodes[_node_x][_node_y] == 0 ) {
+						_antinodes[_node_x][_node_y] = 1;
 						_answer++;
 					}
 				}
@@ -82,9 +84,11 @@ function day08_part2(input){
 				
 				var _n = 0;
 				while( true ) {
-					if( point_in_rectangle( _antennas[j][0]+(_x_diff*_n), _antennas[j][1]+(_y_diff*_n), 0, 0, input[1], input[2] ) ) {
-						if( _antinodes[_antennas[j][0]+(_x_diff*_n)][_antennas[j][1]+(_y_diff*_n)] == 0 ) {
-							_antinodes[_antennas[j][0]+(_x_diff*_n)][_antennas[j][1]+(_y_diff*_n)] = 1;
+					var _node_x = _antennas[j][0]+(_x_diff*_n),
+						_node_y = _antennas[j][1]+(_y_diff*_n);
+					if( point_in_rectangle( _node_x, _node_y, 0, 0, input[1], input[2] ) ) {
+						if( _antinodes[_node_x][_node_y] == 0 ) {
+							_antinodes[_node_x][_node_y] = 1;
 							_answer++;
 						}
 						_n++;
