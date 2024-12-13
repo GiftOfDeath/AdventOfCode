@@ -1,11 +1,11 @@
 // VM:
-//   Input parsing time: 2.08ms
-//   P1 solve avg. time: 285µs
-//   P2 solve avg. time: 325µs
+//   Input parsing time: 2.39ms
+//   P1 solve avg. time: 328µs
+//   P2 solve avg. time: 353µs
 // YYC:
-//   Input parsing time: 1.69ms
-//   P1 solve avg. time: 75µs
-//   P2 solve avg. time: 87µs
+//   Input parsing time: 1.70ms
+//   P1 solve avg. time: 118µs
+//   P2 solve avg. time: 123µs
 
 function day13_input(file) {
 	var _input = input_array( file );
@@ -33,7 +33,7 @@ function day13_part1(input){
 		_machine;
 	
 	for( var i = 0; i < array_length(input); i++ ) {
-		_machine = input[i];
+		_machine   = input[i];
 		
 		var _target_x = _machine.prize[0];
 		var _target_y = _machine.prize[1];
@@ -47,13 +47,13 @@ function day13_part1(input){
 		var _det = 1 / ( ( _a1 * _d1 ) - ( _b1 * _c1 ) );
 		
 		// Inverse the matrix
-		var _a2 = _det*_d1, 
-			_b2 = _det*-_b1,
-			_c2 = _det*-_c1, 
-			_d2 = _det*_a1;
-		
-		var _ab = int64( ( _target_x * _a2 ) + ( _target_y * _c2 ) ); // Number of A-button presses
-		var _bb = int64( ( _target_x * _b2 ) + ( _target_y * _d2 ) ); // Number of B-button presses
+		var _a2 = _det * _d1, 
+			_b2 = _det *-_b1,
+			_c2 = _det *-_c1, 
+			_d2 = _det * _a1;
+			
+		var _ab = round( ( _target_x * _a2 ) + ( _target_y * _c2 ) ); // A-button presses
+		var _bb = round( ( _target_x * _b2 ) + ( _target_y * _d2 ) ); // B-button presses
 		
 		if( (_a1 * _ab + _c1 * _bb ) == _target_x && (_b1 * _ab + _d1 * _bb) == _target_y ) {
 			_answer += _ab*3 + _bb;
@@ -83,13 +83,13 @@ function day13_part2(input){
 		var _det = 1 / ( ( _a1 * _d1 ) - ( _b1 * _c1 ) );
 		
 		// Inverse the matrix
-		var _a2 = _det*_d1, 
-			_b2 = _det*-_b1,
-			_c2 = _det*-_c1, 
-			_d2 = _det*_a1;
-		
-		var _ab = int64( ( _target_x * _a2 ) + ( _target_y * _c2 ) ); // Number of A-button presses
-		var _bb = int64( ( _target_x * _b2 ) + ( _target_y * _d2 ) ); // Number of B-button presses
+		var _a2 = _det * _d1, 
+			_b2 = _det *-_b1,
+			_c2 = _det *-_c1, 
+			_d2 = _det * _a1;
+			
+		var _ab = round( ( _target_x * _a2 ) + ( _target_y * _c2 ) ); // A-button presses
+		var _bb = round( ( _target_x * _b2 ) + ( _target_y * _d2 ) ); // B-button presses
 		
 		if( (_a1 * _ab + _c1 * _bb ) == _target_x && (_b1 * _ab + _d1 * _bb) == _target_y ) {
 			_answer += _ab*3 + _bb;
@@ -98,7 +98,6 @@ function day13_part2(input){
 	
 	return _answer;
 }
-
 
 
 // Just leaving this here for funsies :D
